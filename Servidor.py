@@ -11,6 +11,8 @@ from datetime import timedelta
 def UpdateDatabase():
     print("Comenzó...")
     
+    #### INDICADORES DIARIOS ####
+
     #Declaración de variables a utilizar dentro de la condicional y autenticación
     var = ["brent","dolar","euro","henryhub","uf","utm","wti"]
     auth = "1594882b82550b038f365b0c6a7976682bdd0192"
@@ -141,6 +143,43 @@ def UpdateDatabase():
             df.to_excel(writer, sheet_name = "INDI_"+i, index=False)
 
     writer.save()
+
+    #### COSTOS MARGINALES ####
+
+    period = ["diarios","horarios"]
+    var = ["atacama","cardones","charrua","crucero","pandeazucar","puertomontt","quillota","tarapaca"]
+    auth = "1594882b82550b038f365b0c6a7976682bdd0192"
+
+    mes = ["01","02","03","04","05","06","07","08","09","10","11","12"]
+    date = datetime.now()
+    year = date.strftime("%Y")
+    Nyear = int(year)+1
+    dfs = []
+
+    for x in period:
+        for y in var:
+            for i in range(2008,Nyear):
+                for j in mes:
+                    url = "https://api.desarrolladores.energiaabierta.cl/costos-marginales/v1/"+x+"/"+y+".json/?auth_key="+auth+"&ano="+str(i)+"&mes="+j
+                    try:
+                        data = requests.get(url)
+                        Jdata = data.json()
+                        df = pd.DataFrame(Jdata["data"])
+                        df.columns = Jdata["headers"]
+                    except:
+                        print(url)
+                    
+                    dfs.append(df)
+
+            salida = pd.concat(dfs)
+            salida.columns=["Año","Mes","Dia","Barra","Tension","Valor"]
+            salida["Central"]=y
+            salida["Periodicidad"]=x
+
+            salida.to_excel("Costos Marginales/CM_"+y+"_"+x+".xlsx", index = False)
+
+
+    #### ####
 
     return
 
