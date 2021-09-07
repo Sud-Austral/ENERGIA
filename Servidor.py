@@ -6,6 +6,8 @@ import json
 import pandas as pd
 from datetime import datetime
 from datetime import timedelta
+import requests
+
 
 #************************************Bucle general********************************************************
 def UpdateDatabase():
@@ -146,7 +148,7 @@ def UpdateDatabase():
 
     #### COSTOS MARGINALES ####
 
-    period = ["diarios"]
+    period = ["diarios","horarios"]
     var = ["atacama","cardones","charrua","crucero","pandeazucar","puertomontt","quillota","tarapaca"]
     auth = "1594882b82550b038f365b0c6a7976682bdd0192"
 
@@ -155,6 +157,8 @@ def UpdateDatabase():
     year = date.strftime("%Y")
     Nyear = int(year)+1
     dfs = []
+
+    writer = pd.ExcelWriter('Costos Marginales/Costos Marginales.xlsx')
 
     for x in period:
         for y in var:
@@ -172,10 +176,13 @@ def UpdateDatabase():
                     dfs.append(df)
 
             salida = pd.concat(dfs)
-            salida.columns=["Año","Mes","Dia","Barra","Tension","Valor"]
+            if x == "diarios":
+                salida.columns=["Año","Mes","Dia","Barra","Tension","Valor"]
+            else:
+                salida.columns=["Fecha","Año","Mes","Dia","Hora","Barra","Tension","Valor"]
             salida["Central"]=y
             salida["Periodicidad"]=x
-
+            salida.to_excel(writer, sheet_name = "CM_"+y+"_"+x, index=False)
             salida.to_excel("Costos Marginales/CM_"+y+"_"+x+".xlsx", index = False)
 
 
