@@ -146,7 +146,7 @@ def UpdateDatabase():
 
     #### COSTOS MARGINALES ####
 
-    period = ["diarios","horarios"]
+    period = ["diarios"]
     var = ["atacama","cardones","charrua","crucero","pandeazucar","puertomontt","quillota","tarapaca"]
     auth = "1594882b82550b038f365b0c6a7976682bdd0192"
 
