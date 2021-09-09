@@ -6,7 +6,6 @@ import json
 import pandas as pd
 from datetime import datetime
 from datetime import timedelta
-import requests
 
 
 #************************************Bucle general********************************************************
@@ -148,12 +147,7 @@ def UpdateDatabase():
 
     #### COSTOS MARGINALES ####
 
-    import requests
-    import json
-    import pandas as pd
-    from datetime import datetime
-
-    #
+    
     period = ["horarios", "diarios"]
     var = ["atacama","cardones","charrua","crucero","pandeazucar","puertomontt","quillota","tarapaca"]
     auth = "1594882b82550b038f365b0c6a7976682bdd0192"
