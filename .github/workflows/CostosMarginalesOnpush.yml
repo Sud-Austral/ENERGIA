@@ -1,4 +1,4 @@
-name: Energia Abierta CL
+name: Energia Abierta CL - Costos Marginales
 
 on:
     push
@@ -23,11 +23,11 @@ jobs:
         pip install -r requirements.txt
     - name: Creating secret JSON
       run: |
-        python Servidor.py
+        python svCostosMarginales.py
 
     - uses: stefanzweifel/git-auto-commit-action@v2
       with:
-        commit_message: "Datos Diarios Energía Abierta CL"
+        commit_message: "Costos Marginales"
         branch: main
         # Optional glob pattern of files which should be added to the commit
         #file_pattern: /
