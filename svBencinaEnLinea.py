@@ -18,6 +18,7 @@ def UpdateDatabase():
     auth = "1594882b82550b038f365b0c6a7976682bdd0192"
     tipoComb = ["diesel","gasolina93","gasolina95","gasolina97","glp","gnc"]
     date = datetime.now()
+    year = date.strftime("%Y")
     day = date.strftime("%d/%m/%Y")
     hour = date.strftime("%H:%M:%S")
     Nyear = int(year)+1
